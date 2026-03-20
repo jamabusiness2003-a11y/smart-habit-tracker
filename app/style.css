@@ -1,0 +1,42 @@
+body {
+    font-family: system-ui, sans-serif;
+    background-color: #f1f1f1;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.field-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#habitInput {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#addBtn {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#habitList {
+    list-style: none;
+    padding: 0;
+}
+
+#habitList li {
+    border-top: 1px solid #ccc;
+    padding: 8px;
+}
