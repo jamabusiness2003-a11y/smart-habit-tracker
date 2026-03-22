@@ -1,4 +1,7 @@
-import { createHabit } from "./components/habit_item.js";
+import { 
+    createBtnContainer, 
+    createButton,  
+    createHabit } from "./components/habit_item.js";
 
 const habitInput = document.getElementById("habitInput");
 const addBtn = document.getElementById("addBtn");
@@ -15,10 +18,15 @@ function addHabit() {
 
     habits.push({
         text: habitText,
-        completed: false
+        completed: false,
     });
 
     habitInput.value = "";
+    renderHabits();
+}
+
+function markAsCompleted(habit) {
+    habit.completed = !habit.completed; 
     renderHabits();
 }
 
@@ -26,6 +34,19 @@ function renderHabits() {
     habitList.replaceChildren();
 
     habits.forEach(habit => {
-        createHabit(habitList, habit.text);
+        const btnContainer = createBtnContainer(() => {
+            markAsCompleted(habit);
+        });
+        const li = createHabit(habit.text);
+        const completedBtn = createButton("✔️", "mark-btn");
+
+        if (habit.completed) {
+            li.classList.add("completed");
+        }
+
+        btnContainer.appendChild(completedBtn);
+        li.appendChild(btnContainer);
+
+        habitList.appendChild(li);
     });
 }

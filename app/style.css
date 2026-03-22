@@ -39,4 +39,23 @@ body {
 #habitList li {
     border-top: 1px solid #ccc;
     padding: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#habitList li.completed {
+    text-decoration: line-through;
+    color: #555;
+    opacity: 0.7;
+}
+
+.mark-btn {
+    background: none;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+}
+
+.mark-btn:hover {
+    opacity: 0.6;
 }
