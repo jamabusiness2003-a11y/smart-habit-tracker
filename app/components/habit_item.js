@@ -5,6 +5,10 @@ export function createHabit(habit) {
     return li;
 }
 
+export function removeHabit(habits, index) {
+    habits.splice(index, 1);
+}
+
 export function createBtnContainer(onClick) {
     const btnContainer = document.createElement("div");
     

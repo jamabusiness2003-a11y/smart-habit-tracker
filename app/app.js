@@ -1,7 +1,8 @@
 import { 
     createBtnContainer, 
     createButton,  
-    createHabit } from "./components/habit_item.js";
+    createHabit, 
+    removeHabit} from "./components/habit_item.js";
 
 const habitInput = document.getElementById("habitInput");
 const addBtn = document.getElementById("addBtn");
@@ -26,7 +27,7 @@ function addHabit() {
 }
 
 function deleteHabit(index) {
-    habits.splice(index, 1);
+    removeHabit(habits, index);
     renderHabits();
 }
 
