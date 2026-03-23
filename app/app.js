@@ -1,13 +1,12 @@
-import { 
-    createBtnContainer, 
-    createButton,  
-    createHabit } from "./components/habit_item.js";
+import { createBtnContainer, createButton, createHabit } from "./components/habit_item.js";
+import { removeHabit, toggleHabit } from "./utils/habitHelpers.js";
+import { loadHabits, saveHabits } from "./utils/storage.js";
 
 const habitInput = document.getElementById("habitInput");
 const addBtn = document.getElementById("addBtn");
 const habitList = document.getElementById("habitList");
 
-let habits = [];
+let habits = loadHabits() || [];
 
 addBtn.addEventListener("click", addHabit);
 
@@ -22,16 +21,22 @@ function addHabit() {
     });
 
     habitInput.value = "";
+
+    saveHabits(habits);
     renderHabits();
 }
 
 function deleteHabit(index) {
-    habits.splice(index, 1);
+    removeHabit(habits, index);
+
+    saveHabits(habits);
     renderHabits();
 }
 
 function markAsCompleted(index) {
-    habits[index].completed = !habits[index].completed; 
+    toggleHabit(habits, index);
+
+    saveHabits(habits);
     renderHabits();
 }
 
@@ -60,3 +65,5 @@ function renderHabits() {
         habitList.appendChild(li);
     });
 }
+
+renderHabits();
