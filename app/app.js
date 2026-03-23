@@ -25,26 +25,36 @@ function addHabit() {
     renderHabits();
 }
 
-function markAsCompleted(habit) {
-    habit.completed = !habit.completed; 
+function deleteHabit(index) {
+    habits.splice(index, 1);
+    renderHabits();
+}
+
+function markAsCompleted(index) {
+    habits[index].completed = !habits[index].completed; 
     renderHabits();
 }
 
 function renderHabits() {
     habitList.replaceChildren();
 
-    habits.forEach(habit => {
-        const btnContainer = createBtnContainer(() => {
-            markAsCompleted(habit);
+    habits.forEach((habit, index) => {
+        const btnContainer = createBtnContainer((e) => {
+            if (e.target.classList.contains("mark-btn"))
+                markAsCompleted(index);
+            
+            if (e.target.classList.contains("delete-btn")) 
+                deleteHabit(index);
         });
         const li = createHabit(habit.text);
         const completedBtn = createButton("✔️", "mark-btn");
+        const deleteBtn = createButton("❌", "delete-btn");
 
         if (habit.completed) {
             li.classList.add("completed");
         }
 
-        btnContainer.appendChild(completedBtn);
+        btnContainer.append(completedBtn, deleteBtn);
         li.appendChild(btnContainer);
 
         habitList.appendChild(li);

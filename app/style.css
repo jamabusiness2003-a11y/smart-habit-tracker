@@ -49,6 +49,7 @@ body {
     opacity: 0.7;
 }
 
+.delete-btn,
 .mark-btn {
     background: none;
     cursor: pointer;
@@ -56,6 +57,7 @@ body {
     font-size: 18px;
 }
 
+.delete-btn:hover,
 .mark-btn:hover {
     opacity: 0.6;
 }
