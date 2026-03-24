@@ -1,14 +1,18 @@
 import { createBtnContainer, createButton, createHabit } from "./components/habit_item.js";
-import { removeHabit, toggleHabit } from "./utils/habitHelpers.js";
+import { dateFormatter, longDateFormatter } from "./utils/formatter.js";
+import { removeHabit, resetCompletedHabit, toggleHabit } from "./utils/habitHelpers.js";
 import { loadHabits, saveHabits } from "./utils/storage.js";
 
 const habitInput = document.getElementById("habitInput");
 const addBtn = document.getElementById("addBtn");
 const habitList = document.getElementById("habitList");
+const dateEl = document.getElementById("date");
 
 let habits = loadHabits() || [];
 
 addBtn.addEventListener("click", addHabit);
+
+dateEl.textContent = longDateFormatter("en-CA");
 
 function addHabit() {
     const habitText = habitInput.value.trim();
@@ -18,6 +22,7 @@ function addHabit() {
     habits.push({
         text: habitText,
         completed: false,
+        lastCompletedDate: ""
     });
 
     habitInput.value = "";
@@ -36,6 +41,12 @@ function deleteHabit(index) {
 function markAsCompleted(index) {
     toggleHabit(habits, index);
 
+    if (habits[index].completed && !habits[index].lastCompletedDate) {
+        habits[index].lastCompletedDate = dateFormatter(Date.now());
+    } else {
+        habits[index].lastCompletedDate = "";
+    }
+    
     saveHabits(habits);
     renderHabits();
 }
@@ -59,11 +70,15 @@ function renderHabits() {
             li.classList.add("completed");
         }
 
+        resetCompletedHabit(li, habit);
+
         btnContainer.append(completedBtn, deleteBtn);
         li.appendChild(btnContainer);
 
         habitList.appendChild(li);
     });
+
+    console.log(habits);
 }
 
 renderHabits();
