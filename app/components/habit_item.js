@@ -5,10 +5,8 @@ export function createHabit(habit) {
     return li;
 }
 
-export function createBtnContainer(onClick) {
+export function createBtnContainer() {
     const btnContainer = document.createElement("div");
-    
-    btnContainer.addEventListener("click", onClick);
     return btnContainer;
 }
 

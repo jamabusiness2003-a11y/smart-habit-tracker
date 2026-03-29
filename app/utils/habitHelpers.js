@@ -6,12 +6,18 @@ export function toggleHabit(habits, index) {
     habits[index].completed = !habits[index].completed;  
 }
 
-export function resetCompletedHabit(element, habit) {
-    const today = new Date().toLocaleDateString();
+export function resetHabitsDaily(habits, today) {
+    habits.forEach(habit => {
+        if (habit.completed && habit.lastCompletedDate !== today) {
+            habit.completed = false;
+        } 
+    });     
+}
 
-    if (habit.lastCompletedDate !== today) {
-        habit.completed = false;
+export function updateCompletionDate(habit, formatter) {
+    if (habit.completed && !habit.lastCompletedDate) {
+        habit.lastCompletedDate = formatter(Date.now());
+    } else {
         habit.lastCompletedDate = "";
-        element.classList.remove("completed");
-    }   
+    }
 }

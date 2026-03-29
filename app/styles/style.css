@@ -1,6 +1,6 @@
 body {
     font-family: system-ui, sans-serif;
-    background-color: #f1f1f1;
+    background: linear-gradient(135deg, #5f2c82, #49a09d);
     min-height: 100vh;
     display: flex;
     justify-content: center;
