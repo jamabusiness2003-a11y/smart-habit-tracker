@@ -17,7 +17,5 @@ export function resetHabitsDaily(habits, today) {
 export function updateCompletionDate(habit, formatter) {
     if (habit.completed && !habit.lastCompletedDate) {
         habit.lastCompletedDate = formatter(Date.now());
-    } else {
-        habit.lastCompletedDate = "";
     }
 }
