@@ -18,6 +18,12 @@ function init() {
     addBtn.addEventListener("click", addHabit);
     habitList.addEventListener("click", handleListClick);
 
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            addBtn.click();
+        }
+    });
+
     dateEl.textContent = longDateFormatter("en-CA");
     resetHabitsDaily(habits, today);
 
