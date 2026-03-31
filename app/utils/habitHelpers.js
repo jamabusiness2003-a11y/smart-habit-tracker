@@ -10,6 +10,7 @@ export function resetHabitsDaily(habits, today) {
     habits.forEach(habit => {
         if (habit.completed && habit.lastCompletedDate !== today) {
             habit.completed = false;
+            habit.lastCompletedDate = "";
         } 
     });     
 }
