@@ -10,11 +10,11 @@ export function createBtnContainer() {
     return btnContainer;
 }
 
-export function createButton(label, cssClass) {
+export function createButton(label, className) {
     const btn = document.createElement("button");
 
     btn.textContent = label;
-    btn.classList.add(cssClass);
+    btn.classList.add(className);
 
     return btn;
 }

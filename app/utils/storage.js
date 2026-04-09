@@ -1,7 +1,9 @@
+const KEY = "habits";
+
 export function saveHabits(habits) {
-    localStorage.setItem("habits", JSON.stringify(habits));
+    localStorage.setItem(KEY, JSON.stringify(habits));
 }
 
 export function loadHabits() {
-    return JSON.parse(localStorage.getItem("habits")) || [];
+    return JSON.parse(localStorage.getItem(KEY)) || [];
 }
