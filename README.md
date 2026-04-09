@@ -14,3 +14,8 @@ The app focuses on performance and usability featuring a smart search system tha
 - View list of habit 
 - Persistant data
 - Track per day
+
+### Extra Features
+- Time-based streak
+
+**Live Demo:** https://jamabusiness2003-a11y.github.io/smart-habit-tracker/
