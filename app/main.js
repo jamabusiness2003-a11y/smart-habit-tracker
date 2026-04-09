@@ -1,6 +1,13 @@
-import { createBtnContainer, createButton, createHabit } from "./components/habit_item.js";
+import { createBtnContainer, createButton, createHabit } from "./components/habitItem.js";
+import { createHabitStreaks } from "./components/habitStreaks.js";
+import { isStreakActive } from "./utils/flag.js";
 import { dateFormatter, longDateFormatter } from "./utils/formatter.js";
-import { removeHabit, resetHabitsDaily, toggleHabit, updateCompletionDate } from "./utils/habitHelpers.js";
+import { 
+    removeHabit, 
+    resetHabitsDaily, 
+    toggleHabit, 
+    updateCompletionDate 
+} from "./utils/habitHelpers.js";
 import { loadHabits, saveHabits } from "./utils/storage.js";
 
 const habitInput = document.getElementById("habitInput");
@@ -8,38 +15,53 @@ const addBtn = document.getElementById("addBtn");
 const habitList = document.getElementById("habitList");
 const dateEl = document.getElementById("date");
 
+const today = dateFormatter(Date.now());
+const LAST_RESET_KEY = "lastResetDate";
+
 let habits = loadHabits();
 
 init();
 
 function init() {
-    const today = dateFormatter(Date.now());
-
-    addBtn.addEventListener("click", addHabit);
-    habitList.addEventListener("click", handleListClick);
-
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            addBtn.click();
-        }
-    });
+    handleEvents();
 
     dateEl.textContent = longDateFormatter("en-CA");
-    resetHabitsDaily(habits, today);
 
+    const lastResetDate = localStorage.getItem(LAST_RESET_KEY);
+
+    if (lastResetDate !== today) {
+        resetHabitsDaily(habits, today);
+        localStorage.setItem(LAST_RESET_KEY, today);
+        saveHabits(habits);
+    }
+    
     renderHabits();
 }
 
-function addHabit() {
-    const habitText = habitInput.value.trim();
+function handleEvents() {
+    addBtn.addEventListener("click", addHabit);
+    habitList.addEventListener("click", handleListClick);
 
-    if (!habitText) return;
-
-    habits.push({
-        text: habitText,
-        completed: false,
-        lastCompletedDate: ""
+    habitInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            addHabit();
+        }
     });
+}
+
+function addHabit() {
+    const text = habitInput.value.trim();
+    if (!text) return;
+
+    const newHabit = {
+        text,
+        completed: false,
+        lastCompletedDate: "",
+        streaks: 0
+    };
+
+    habits.push(newHabit);
 
     habitInput.value = "";
     updateApp();
@@ -50,11 +72,19 @@ function handleListClick(e) {
     if (!li) return;
 
     const index = Number(li.dataset.index);
+    if (isNaN(index) || !habits[index]) return;
+
+    const habit = habits[index];
 
     if (e.target.classList.contains("mark-btn")) {
         toggleHabit(habits, index);
-        updateCompletionDate(habits[index], dateFormatter);
+
+        if (habit.completed) {
+            updateCompletionDate(habit, today);  
+        }
+
         updateApp();
+        return;
     }
                    
     if (e.target.classList.contains("delete-btn")) {
@@ -73,8 +103,12 @@ function buildHabitItem(habit, index) {
     const completedBtn = createButton("✔️", "mark-btn");
     const deleteBtn = createButton("❌", "delete-btn");
 
+    const streakEl = createHabitStreaks(`🔥 ${habit.streaks}`);
+    const isActive = isStreakActive(habit, today);
+    streakEl.classList.toggle("hidden", !isActive);
+
     btnContainer.append(completedBtn, deleteBtn);
-    li.appendChild(btnContainer);
+    li.append(streakEl, btnContainer);
 
     return li;
 }
