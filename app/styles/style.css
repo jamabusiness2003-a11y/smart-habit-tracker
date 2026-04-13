@@ -37,7 +37,13 @@ h1 {
 
 #addBtn {
     padding: 10px 20px;
+    border: none;
+    background-color: #5f2c82;
+    color: white;
+    border-radius: 10px;
+    font-size: 26px;
     cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s;
 }
 
 #habitList {
@@ -73,4 +79,12 @@ h1 {
 
 small.hidden {
     display: none;
+}
+
+#addBtn:hover {
+    opacity: 0.8;
+}
+
+#addBtn:active {
+    transform: scale(0.95);
 }
