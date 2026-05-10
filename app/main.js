@@ -64,6 +64,11 @@ function addHabit() {
     habits.push(newHabit);
 
     habitInput.value = "";
+
+    gtag('event', 'add_habit', {
+        event_category: 'engagement'
+    });
+
     updateApp();
 }
 
@@ -82,6 +87,10 @@ function handleListClick(e) {
         if (habit.completed) {
             updateCompletionDate(habit, today);  
         }
+
+        gtag('event', 'complete_habit', {
+            event_category: 'engagement',
+        });
 
         updateApp();
         return;
