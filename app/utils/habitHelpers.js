@@ -8,9 +8,13 @@ export function toggleHabit(habits, index) {
     habits[index].completed = !habits[index].completed;  
 }
 
-export function resetHabitsDaily(habits, today) {
+export function resetHabitsDaily(habits, today, title) {
+    const message = {
+        recovery: "Missed a few days? No problem. Start small today."
+    };
+
     habits.forEach(habit => {
-        updateStreaks(habit, today);
+        updateStreaks(habit, today, title, message);
         habit.completed = false;
     });     
 }
@@ -19,7 +23,7 @@ export function updateCompletionDate(habit, today) {
     habit.lastCompletedDate = today;
 }
 
-export function updateStreaks(habit, today) {
+export function updateStreaks(habit, today, title, message) {
     if (!habit.lastCompletedDate) {
         habit.streaks = 1;
     } else {
@@ -31,6 +35,7 @@ export function updateStreaks(habit, today) {
         if (diffDays === 1) {
             habit.streaks++;
         } else if (diffDays > 1) {
+            title.textContent = message.recovery;
             habit.streaks = 1; 
         }
     }

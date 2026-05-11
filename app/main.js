@@ -15,10 +15,12 @@ const addBtn = document.getElementById("addBtn");
 const habitList = document.getElementById("habitList");
 const dateEl = document.getElementById("date");
 const noHabit = document.getElementById("noHabit");
+const title = document.getElementById("title");
 
 const today = dateFormatter(Date.now());
 const LAST_RESET_KEY = "lastResetDate";
 
+const today2 = "2026-06-03";
 let habits = loadHabits();
 
 init();
@@ -30,11 +32,13 @@ function init() {
 
     const lastResetDate = localStorage.getItem(LAST_RESET_KEY);
 
-    if (lastResetDate !== today) {
-        resetHabitsDaily(habits, today);
-        localStorage.setItem(LAST_RESET_KEY, today);
+    if (lastResetDate !== today2) {
+        resetHabitsDaily(habits, today2, title);
+        localStorage.setItem(LAST_RESET_KEY, today2);
         saveHabits(habits);
     }
+
+    console.log(habits);
     
     renderHabits();
 }
@@ -88,7 +92,7 @@ function handleListClick(e) {
         toggleHabit(habits, index);
 
         if (habit.completed) {
-            updateCompletionDate(habit, today);  
+            updateCompletionDate(habit, today2);  
         }
 
         if (typeof gtag === "function") {
@@ -118,7 +122,7 @@ function buildHabitItem(habit, index) {
     const deleteBtn = createButton("❌", "delete-btn");
 
     const streakEl = createHabitStreaks(`🔥 ${habit.streaks}`);
-    const isActive = isStreakActive(habit, today);
+    const isActive = isStreakActive(habit, today2);
     streakEl.classList.toggle("hidden", !isActive);
 
     btnContainer.append(completedBtn, deleteBtn);
