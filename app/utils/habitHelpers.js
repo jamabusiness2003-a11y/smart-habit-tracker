@@ -20,21 +20,18 @@ export function updateCompletionDate(habit, today) {
 }
 
 export function updateStreaks(habit, today) {
-    if (!habit.lastCompletedDate) return;
+    if (!habit.lastCompletedDate) {
+        habit.streaks = 1;
+    } else {
+        const current_day = parseLocalDate(today);
+        const last_day = parseLocalDate(habit.lastCompletedDate);
 
-    const current_day = parseLocalDate(today);
-    const last_day = parseLocalDate(habit.lastCompletedDate);
+        const diffDays = daysDifference(current_day, last_day);
 
-    const diffDays = daysDifference(current_day, last_day);
-
-    console.log("diffDays:", diffDays);
-
-    if (diffDays > 1) {
-        habit.streaks = 0;
-        return;
-    }
-
-    if (diffDays === 1 && habit.completed) {
-        habit.streaks++; 
+        if (diffDays === 1) {
+            habit.streaks++;
+        } else if (diffDays > 1) {
+            habit.streaks = 1; 
+        }
     }
 }

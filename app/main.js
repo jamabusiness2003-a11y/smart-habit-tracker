@@ -14,6 +14,7 @@ const habitInput = document.getElementById("habitInput");
 const addBtn = document.getElementById("addBtn");
 const habitList = document.getElementById("habitList");
 const dateEl = document.getElementById("date");
+const noHabit = document.getElementById("noHabit");
 
 const today = dateFormatter(Date.now());
 const LAST_RESET_KEY = "lastResetDate";
@@ -132,9 +133,9 @@ function renderHabits() {
     habits.forEach((habit, index) => {
         const li = buildHabitItem(habit, index);
         habitList.appendChild(li);
-    });
+    });  
 
-    console.log(habits);
+    noHabit.classList.toggle("hidden", habits.length !== 0); 
 }
 
 function updateApp() {

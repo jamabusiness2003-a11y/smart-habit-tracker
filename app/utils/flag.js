@@ -1,8 +1,8 @@
-import { daysDifference } from "./formatter.js";
+import { daysDifference, parseLocalDate } from "./formatter.js";
 
 export function isStreakActive(habit, today) {
-    const current_day = new Date(today);
-    const last_day = new Date(habit.lastCompletedDate);
+    const current_day = parseLocalDate(today);
+    const last_day = parseLocalDate(habit.lastCompletedDate);
 
     if (isNaN(current_day) || isNaN(last_day)) return false;
 
